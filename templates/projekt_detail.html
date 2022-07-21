@@ -1,0 +1,110 @@
+{% extends 'base.html' %} {% block title %}Edit {{ prj.Bezeichnung }} - {%
+endblock %} {% block content %}
+
+  <div class="container">
+    <h4>Projekt {{ prj.AufgabeId }}: {{ prj.Bezeichnung }}</h4>
+    <div class="form-group">
+      <p>Titel:</p>
+      <p>{{ prj.Bezeichnung }}</p>
+    </div>
+    <div class="form-group">
+      <p>Beschreibung:</p>
+      <p>{{ prj.Bemerkungen }}</p>
+    </div>
+    <h4>Termine</h4>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <p>Projekt Beginn:</p>
+          <p>{{ prj.Datum_Start }}</p>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <p>Projekt Planende:</p>
+          <p>{{ prj.Datum_Ende_Geplant }}</p>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <p>Projekt Ende:</p>
+          <p>{{ prj.Datum_Ende }}</p>
+        </div>
+      </div>
+    </div>
+    <!--
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">Team</a></li>
+      <li><a data-toggle="tab" href="#plan">Termine</a></li>
+      <li><a data-toggle="tab" href="#status">Aufwand</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane container active" id="team">
+        
+      </div>
+      <div class="tab-pane container fade" id="plan">todo! Projektplan</div>
+      <div class="tab-pane container fade" id="status">todo: Statusliste</div>
+    </div>
+    -->
+    <ul class="nav nav-tabs" style="background-color: lavender">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#team">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#plan">Menu 1</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#status">Menu 2</a>
+      </li>
+    </ul>
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane container active" id="home">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Person</th>
+              <th>Rolle</th>
+              <th>Bemerkungen</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in range(0, len(df_team)) %}
+            <tr>
+              <td>{{ df_team.iloc[i]['name'] }}</td>
+              <td>{{ df_team.iloc[i]['rolle'] }}</td>
+              <td>{{ df_team.iloc[i]['bemerkungen'] }}</td>
+              <td width="3%">
+                <a
+                  data-toggle="modal"
+                  data-id="{{ i }}"
+                  title="Eintrag editieren"
+                  class="btn btn-link"
+                  href="#editTeam{{ i }}"
+                  ><i class="fas fa-edit"></i
+                ></a>
+              </td>
+              <td width="3%">
+                <a
+                  title="Eintrag löschen"
+                  class="btn btn-link"
+                  href="#editTeam{{ i }}"
+                  title="Eintrag löschen"
+                >
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane container fade" id="plan">plan: todo!</div>
+      <div class="tab-pane container fade" id="status">status: todo</div>
+    </div>
+    
+  </div>
+
+
+{% endblock %}

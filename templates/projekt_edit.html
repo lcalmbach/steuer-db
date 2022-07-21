@@ -1,0 +1,153 @@
+{% extends 'base.html' %} {% block title %}Projekt{%
+endblock %} {% block content %}
+<div>
+  <div class="container">
+    <h4>Projekt {{ form.id.data }}: {{ form.title.data }}</h4>
+    <hr />
+    <form
+      method="POST"
+      action="{{ url_for('projekt_edit', prj_id=form.id.data) }}"
+      enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.id.label }} {{ form.id(class="form-control", readonly=true) }}
+      </div>
+      <div class="form-group">
+        {{ form.title.label }} {{ form.title(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.project_type.label }} {{
+        form.project_type(class="form-control")}}
+      </div>
+      <div class="form-group">
+        {{ form.description.label }} {{ form.description(class="form-control",
+        rows="5") }}
+      </div>
+      <div class="form-group">
+        {{ form.project_start.label }}
+        {{form.project_start(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.project_planend.label }} {{
+        form.project_planend(class="form-control")}}
+      </div>
+      <div class="form-group">
+        {{ form.project_end.label }} {{ form.project_end(class="form-control")}}
+      </div>
+      <br />
+
+      <ul class="nav nav-tabs" style="background-color: lavender">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#team">Team</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#plan">Plan</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#status">Status</a>
+        </li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content" style="background-color: rgb(246, 246, 246)">
+        <div class="tab-pane container active" id="team">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Rolle</th>
+                <th>Bemerkungen</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in range(0, 2) %}
+              <tr>
+                <td>{{ df_team.iloc[i]['name'] }}</td>
+                <td>{{ df_team.iloc[i]['rolle'] }}</td>
+                <td>{{ df_team.iloc[i]['bemerkungen'] }}</td>
+                <td width="3%">
+                  <a
+                    data-toggle="modal"
+                    data-id="{{ i }}"
+                    title="Eintrag editieren"
+                    class="btn btn-link"
+                    href="#editTeam{{ i }}"
+                    ><i class="fas fa-edit"></i
+                  ></a>
+                </td>
+                <td width="3%">
+                  <a
+                    title="Eintrag löschen"
+                    class="btn btn-link"
+                    href="#editTeam{{ i }}"
+                    title="Eintrag löschen"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+
+              <!-- The Modal -->
+              <div class="modal" id="editTeam{{ i }}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">{{ df_team.iloc[i]['name'] }}</h4>
+                      <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                      </button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      <form
+                        method="POST"
+                        action="{{ url_for('projekt_edit', prj_id=form.id.data) }}"
+                        enctype="multipart/form-data"
+                      >
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                          {{ team_forms[i].name.label }} {{
+                          team_forms[i].name(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                          {{ team_forms[i].role.label }} {{
+                          team_forms[i].role(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                          {{ team_forms[i].remarks.label }} {{
+                          team_forms[i].remarks(class="form-control") }}
+                        </div>
+                        <hr />
+                        {{ team_forms[i].save(class="btn btn-primary form-control") }}
+                        {{ team_forms[i].delete(class="btn btn-primary form-control") }}
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end Modal -->
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane container fade" id="plan">todo! Projektplan</div>
+        <div class="tab-pane container fade" id="status">todo: Statusliste</div>
+      </div>
+      <!-- Tab panes end-->
+      <hr />
+      <div class="btn-group inline pull-left">
+        {{ form.save(class="btn btn-primary form-control") }}
+      </div>
+      <div class="btn-group inline pull-left">
+        {{ form.close(class="btn btn-primary form-control") }}
+      </div>
+      <div class="btn-group inline pull-left">
+        {{ form.delete(class="btn btn-primary form-control") }}
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% set active_page = 'main_menu' %}
+
+{% block content %}
+  <div class = "container mt-3 mb-3">
+    <div class="row my-5 card-wrapper">
+      {% for idx, row in df.iterrows() %}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="{{ url_for(row['page']) }}">{{ row['name'] }}</a>
+              </h4>
+              <p class="card-text">{{ row['description'] }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
